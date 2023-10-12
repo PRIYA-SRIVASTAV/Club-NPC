@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../core/ApiCall.dart';
 
 class change_Password_Controller {
-  change_password_Method(password, confirm_Password, email, context) async {
+  change_password_Method(password, confirm_Password, phone, context) async {
     if (password.toString().isEmpty) {
       customFlutterToast("Please enter new password");
     } else if (confirm_Password.toString().isEmpty) {
@@ -14,7 +14,7 @@ class change_Password_Controller {
       customFlutterToast("confirm password doesn't match");
     } else {
       var r =
-          await ApiCalling().change_password(password, confirm_Password, email);
+          await ApiCalling().change_password(password, confirm_Password, phone);
       debugPrint("++++++++++++++++++++++++++++++++ ${r}");
       if (r["status"].toString() == "true") {
         Navigator.push(

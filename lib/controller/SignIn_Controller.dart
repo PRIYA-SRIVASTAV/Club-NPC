@@ -6,17 +6,17 @@ import '../constants/prefs_contants.dart';
 import '../utils/helper_Methods.dart';
 
 class SignIn_Controller {
-  signIn_Method(email, password, context) async {
-    if (email.toString().isEmpty) {
-      customFlutterToast("email can't be empty");
+  signIn_Method(phone, password, context) async {
+    if (phone.toString().isEmpty) {
+      customFlutterToast("phone no. can't be empty");
     } else if (password.toString().isEmpty) {
       customFlutterToast("Password can't be empty");
     } else {
-      var r = await ApiCalling().Login_user(email, password);
+      var r = await ApiCalling().Login_user(phone, password);
 
       if (r["status"].toString() == "true") {
         getPref().then((value) {
-          value.setString(keyToken, r['data'].toString());
+          value.setString(keyToken, r['token'].toString());
         });
         getPref().then((value) {
           value.setString(KEYID, r['id'].toString());
@@ -31,18 +31,3 @@ class SignIn_Controller {
     }
   }
 }
-// SignINMethod(email, password, context) async {
-//   var r = await ApiCalling().userLogin(email, password);
-//   debugPrint("Data From API response ${r['token']}");
-//
-//   if (r['token'] != null) {
-//     getPref().then((value) {
-//       value.setString(keyToken, r['token'].toString());
-//     });
-//     customFlutterToast("Sign in Successfully");
-//     Navigator.push(
-//       context,
-//       MaterialPageRoute(builder: (context) => const BottomNavigationPage()),
-//     );
-//   }
-// }

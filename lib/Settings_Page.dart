@@ -55,23 +55,23 @@ class _Settings_PageState extends State<Settings_Page> {
             height: 20.h,
             width: 20.w,
             decoration: BoxDecoration(
-              color: Colors.red,
               shape: BoxShape.circle,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: data.result.image.isEmpty ||
-                      data.result.image.toString() == "" ||
-                      data.result.image == null
+              child: /*data.data.image.isEmpty ||*/
+              data.data.image.toString() == "" ||
+                  data.data.image == null
                   ? Image.asset(
                       "assets/images/3135715.png",
                       fit: BoxFit.fill,
                     )
                   : Image.network(
-                      data.result.image,
+                      data.data.image,
                       fit: BoxFit.fill,
                     ),
-            ))
+            ),
+          )
         : Container(
             height: 20.h,
             width: 20.w,
@@ -113,17 +113,8 @@ class _Settings_PageState extends State<Settings_Page> {
                               children: [
                                 SizedBox(
                                   height: 20.h,
-                                  width: 40.w,
-                                  child: InkWell(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return openProfilePhoto(context);
-                                          },
-                                        );
-                                      },
-                                      child: imageWidget()),
+                                  width: 20.h,
+                                  child: imageWidget(),
                                 ),
                                 Positioned(
                                   bottom: 1.h,
@@ -161,7 +152,7 @@ class _Settings_PageState extends State<Settings_Page> {
                               height: 2.h,
                             ),
                             Text(
-                              "Name",
+                              "Name:",
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.w600),
                             ),
@@ -178,7 +169,7 @@ class _Settings_PageState extends State<Settings_Page> {
                               height: 2.h,
                             ),
                             Text(
-                              "Email",
+                              "Email:",
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.w600),
                             ),
@@ -195,7 +186,7 @@ class _Settings_PageState extends State<Settings_Page> {
                               height: 2.h,
                             ),
                             Text(
-                              "Mobile No.",
+                              "Whatsapp Number:",
                               style: TextStyle(
                                   fontSize: 14.sp, fontWeight: FontWeight.w600),
                             ),
@@ -522,18 +513,18 @@ class _Settings_PageState extends State<Settings_Page> {
   void get_Setting_data() async {
     data = await Setting_Controller().setting_profile_get_data_Method();
     if (data.status.toString() == "true") {
-      Name.text = data.result.name;
-      email.text = data.result.email;
-      mobileNo.text = data.result.mobileNo;
-      Address.text = data.result.address;
-      Another_address.text = data.result.anotherAddress;
-      city.text = data.result.city;
-      ZipCode.text = data.result.zipcode;
-      state.text = data.result.state;
-      country.text = data.result.country;
-      DOB.text = data.result.dob;
-      firm.text = data.result.firmName;
-      profession.text = data.result.profession;
+      Name.text = data.data.name;
+      email.text = data.data.accountEmail;
+      mobileNo.text = data.data.accountMobile;
+      Address.text = data.data.accountAddress;
+      Another_address.text = data.data.otherAddress;
+      city.text = data.data.accountCity;
+      ZipCode.text = data.data.accountZipcode;
+      state.text = data.data.accountState;
+      country.text = data.data.countryName;
+      DOB.text = data.data.dob.toString().substring(0,10);
+      firm.text = data.data.firmName;
+      profession.text = data.data.clubProfession;
       setState(() {
         isLoadData = true;
       });

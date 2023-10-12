@@ -5,38 +5,38 @@ DashboardPageModel dashboardPageModelFromJson(String str) => DashboardPageModel.
 String dashboardPageModelToJson(DashboardPageModel data) => json.encode(data.toJson());
 
 class DashboardPageModel {
-  bool status;
-  Result result;
-  String msg;
+  int status;
+  Data data;
+  String message;
 
   DashboardPageModel({
     required this.status,
-    required this.result,
-    required this.msg,
+    required this.data,
+    required this.message,
   });
 
   factory DashboardPageModel.fromJson(Map<String, dynamic> json) => DashboardPageModel(
     status: json["status"],
-    result: Result.fromJson(json["result"]),
-    msg: json["msg"],
+    data: Data.fromJson(json["data"]),
+    message: json["message"],
   );
 
   Map<String, dynamic> toJson() => {
     "status": status,
-    "result": result.toJson(),
-    "msg": msg,
+    "data": data.toJson(),
+    "message": message,
   };
 }
 
-class Result {
+class Data {
   String name;
   String joiningId;
   String referalId;
   String profession;
-  String userType;
+  int userType;
   String image;
 
-  Result({
+  Data({
     required this.name,
     required this.joiningId,
     required this.referalId,
@@ -45,7 +45,7 @@ class Result {
     required this.image,
   });
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
     name: json["name"],
     joiningId: json["joining_id"],
     referalId: json["referal_id"],

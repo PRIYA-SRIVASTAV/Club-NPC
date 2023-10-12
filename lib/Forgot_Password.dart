@@ -14,11 +14,12 @@ class Forgot_Password extends StatefulWidget {
 }
 
 class _Forgot_PasswordState extends State<Forgot_Password> {
-  TextEditingController emailController = TextEditingController();
+  TextEditingController mobileNoController = TextEditingController();
+
 
   @override
   void dispose() {
-    emailController.dispose();
+    mobileNoController.dispose();
     super.dispose();
   }
 
@@ -64,19 +65,28 @@ class _Forgot_PasswordState extends State<Forgot_Password> {
                 SizedBox(
                   height: 2.h,
                 ),
-                const Text("Don't worry.\nEnter your email and we'll send you a verification code to reset your password."),
+                const Text("Don't worry.\nEnter your Whatsapp Number and we'll send you a verification code to reset your password."),
                 SizedBox(
                   height: 4.h,
                 ),
                 Text(
-                  "Email",
+                  "Number",
                   style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: 1.h,
                 ),
-                textFieldContainer(
-                    emailController, context, "Enter Your Email", null),
+                TextFormField(
+                  controller: mobileNoController,
+                  keyboardType: TextInputType.phone,
+                  maxLength: 10,
+
+                  decoration: InputDecoration(
+                    counterText: "",
+                    prefixText: "+91",hintText: "Your Whatsapp No.",
+                    border: UnderlineInputBorder(),
+                  ),
+                ),
                 SizedBox(
                   height: 3.h,
                 ),
@@ -85,7 +95,7 @@ class _Forgot_PasswordState extends State<Forgot_Password> {
                   width: 80.w,
                   child: FloatingActionButton(
                     onPressed: () {
-                      Forget_Password_Controller().forget_password_Method(emailController.text, context);
+                      Forget_Password_Controller().forget_password_Method(mobileNoController.text, context);
                     },
                     backgroundColor: appThemeColor,
                     shape: OutlineInputBorder(

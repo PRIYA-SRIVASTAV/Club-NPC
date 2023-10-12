@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
-import 'constants/StringConstant.dart';
 import 'constants/TextStyleConstant.dart';
 import 'constants/colorConstant.dart';
 import 'controller/Contact_Details_Controller.dart';
-import 'controller/Register_controller.dart';
 
 class Contact_Details_Page extends StatefulWidget {
-  var email;
+  var mobile;
 
-  Contact_Details_Page({required this.email, super.key});
+  Contact_Details_Page({required this.mobile, super.key});
 
   @override
   State<Contact_Details_Page> createState() => _Contact_Details_PageState();
@@ -346,22 +344,6 @@ class _Contact_Details_PageState extends State<Contact_Details_Page> {
                     //border: UnderlineInputBorder(),
                   ),
                 ),
-                // TextFormField(
-                //   controller: dob,
-                //   decoration: InputDecoration(
-                //     //suffixIcon: Icon(Icons.person, color: appThemeColor),
-                //     hintText: "dd/mm/yyyy",
-                //     hintStyle: const TextStyle(color: Colors.grey),
-                //     focusedBorder: OutlineInputBorder(
-                //       borderSide:
-                //           BorderSide(color: appThemeColor, width: 0.5.w),
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //     border: OutlineInputBorder(
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //   ),
-                // ),
                 SizedBox(
                   height: 2.h,
                 ),
@@ -527,7 +509,7 @@ class _Contact_Details_PageState extends State<Contact_Details_Page> {
                               dob.text,
                               terms_data,
                               anotheraddress.text,
-                              widget.email,
+                              widget.mobile,
                               context)
                           .whenComplete(
                             () => setState(

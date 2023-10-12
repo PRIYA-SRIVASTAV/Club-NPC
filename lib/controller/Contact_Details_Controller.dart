@@ -1,7 +1,7 @@
+import 'package:club_npc_registration/Sign_in_Page.dart';
 import 'package:club_npc_registration/utils/helper_widget.dart';
 import 'package:flutter/material.dart';
 import '../../core/ApiCall.dart';
-import '../Dashboard_Page.dart';
 
 class Contact_Details_Controller {
   Future Contact_Details_Method(
@@ -16,7 +16,7 @@ class Contact_Details_Controller {
       dob,
       terms,
       another_address,
-      email,
+      mobile,
       context) async {
     debugPrint("address-------------- ${address}");
     debugPrint("country-------------${country}");
@@ -28,7 +28,6 @@ class Contact_Details_Controller {
     debugPrint("zip code-------------${zip_code}");
     debugPrint("dob-------------${dob}");
     debugPrint("terms-------------${terms}");
-    debugPrint("email--------------${email}");
     debugPrint("another_address-------------${another_address}");
 
     if (address.toString().isEmpty) {
@@ -75,13 +74,13 @@ class Contact_Details_Controller {
         zip_code,
         dob,
         terms,
-          email,
+        mobile,
         another_address);
 
-      if (r['status'].toString() == "true") {
+      if (r['status'].toString() == "200") {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Home_Page()),
+          MaterialPageRoute(builder: (context) => Sign_in_Page()),
         );
       } else {
         customFlutterToast(r["message"].toString());

@@ -13,14 +13,17 @@ import 'Results.dart';
 class ApiCalling {
   var client = http.Client();
 
-  headerWithoutToken() async {
-    Map<String, String> WithoutToken = {
-      "Content-Type": "application/json",
+  headerWithoutContentType() async {
+    var pref = await getPref();
+    String token = "";
+    if (pref.getString(keyToken) != null) token = pref.getString(keyToken);
+    Map<String, String> WithToken = {
+      "Authorization": "Bearer $token",
     };
-    return WithoutToken;
+    return WithToken;
   }
 
-  headerWithToken() async {
+  headerWithContentType() async {
     var pref = await getPref();
     String token = "";
     if (pref.getString(keyToken) != null) token = pref.getString(keyToken);
@@ -67,13 +70,14 @@ class ApiCalling {
 
   /// OTP for registration
 
-  Future Register_OTP_user(emailID, OTP) async {
+  Future Register_OTP_user(phone, OTP, OTP_type) async {
     if (await isConnectedToInternet()) {
       try {
         Uri registerUserUri = Uri.parse(ApiEndpoints.OTP_register_User);
         var map = Map<String, dynamic>();
-        map['email'] = emailID.toString();
+        map['phone'] = phone.toString();
         map['otp'] = OTP;
+        map['otp_type'] = OTP_type;
         var registerUserOTPResponse =
             await client.post(registerUserUri, body: map);
         MYAPILOGS("RegisterOTPUser", registerUserOTPResponse);
@@ -93,12 +97,12 @@ class ApiCalling {
 
   /// for Login
 
-  Future Login_user(email, password) async {
+  Future Login_user(phone, password) async {
     if (await isConnectedToInternet()) {
       try {
         Uri registerUserUri = Uri.parse(ApiEndpoints.signInUser);
         var map = Map<String, dynamic>();
-        map['email'] = email;
+        map['phone'] = phone;
         map['password'] = password;
 
         var Login_User_Response = await client.post(registerUserUri, body: map);
@@ -130,7 +134,7 @@ class ApiCalling {
     zip_code,
     dob,
     terms,
-    email,
+    phone,
     another_address,
   ) async {
     if (await isConnectedToInternet()) {
@@ -147,8 +151,8 @@ class ApiCalling {
           "state": state,
           "zip_code": zip_code,
           "dob": dob,
-          "email": email,
           "terms": terms,
+          "phone":phone
         };
         var contact_details_api_Response =
             await client.post(contact_details, body: map);
@@ -171,12 +175,12 @@ class ApiCalling {
 
   /// api for forget password
 
-  Future forget_Password(email) async {
+  Future forget_Password(phone) async {
     if (await isConnectedToInternet()) {
       try {
         Uri forget_Password_Uri = Uri.parse(ApiEndpoints.forgotPassword);
         var map = Map<String, dynamic>();
-        map['email'] = email;
+        map['phone'] = phone;
 
         var forget_password_Response =
             await client.post(forget_Password_Uri, body: map);
@@ -202,7 +206,7 @@ class ApiCalling {
         var map = Map<String, dynamic>();
         map['password'] = newPassword;
         map['cpassword'] = confirmPassword;
-        map['email'] = email;
+        map['phone'] = email;
 
         var change_password_Response =
             await client.post(change_Password_Uri, body: map);
@@ -221,91 +225,92 @@ class ApiCalling {
     }
   }
 
-  /// ===============================================get Apis=================================================================
-  Future getDetailsOfCurrentUser(id) async {
-    try {
-      if (await isConnectedToInternet()) {
-        Uri getCurrentUserData = Uri.parse("${ApiEndpoints.dashboardData}$id");
-
-        var getDetailsOfCurrentUserResponse =
-            await client.get(getCurrentUserData);
-        MYAPILOGS(
-            "getDetailsOfCurrentUserResponse", getDetailsOfCurrentUserResponse);
-        if (getDetailsOfCurrentUserResponse.statusCode == 200) {
-          return dashboardPageModelFromJson(
-              getDetailsOfCurrentUserResponse.body);
-        } else {
-          Results.error("no internet connection");
-        }
-      } else {
-        customFlutterToast("Check your internet...");
-      }
-    } catch (_) {}
-  }
-  Future getSettingsData(id) async {
-    try {
-      if (await isConnectedToInternet()) {
-        Uri getSettingsData = Uri.parse("${ApiEndpoints.SettingGetApi}$id");
-
-        var getSettingsDataResponse =
-        await client.get(getSettingsData);
-        MYAPILOGS(
-            "get Settings data", getSettingsDataResponse);
-        if (getSettingsDataResponse.statusCode == 200) {
-          return getSettingsDataModelFromJson(
-              getSettingsDataResponse.body);
-        } else {
-          Results.error("no internet connection");
-        }
-      } else {
-        customFlutterToast("Check your internet...");
-      }
-    } catch (_) {}
-  }
-
-
   /// multipart api
   Future User_Setting_Post_Api(image, name, email, mobileNo, address,
       ano_address, city, state, zipCode, country, DOB, firm, profession) async {
     try {
       Uri User_setting_Uri = Uri.parse(ApiEndpoints.SettingPostApi);
-      var body = <String,String>{
-        "name" :name,
-        "email" :email,
-        "address":address,
-        "mobile_no":mobileNo,
-        "another_address":ano_address,
-        "city":city,
-        "state":state,
-        "zipcode":zipCode,
-        "country":country,
-        "dob":DOB,
-        "profession":profession,
-        "company_name":firm
+      var body = <String, String>{
+        "name": name,
+        "email": email,
+        "address": address,
+        "mobile_no": mobileNo,
+        "another_address": ano_address,
+        "city": city,
+        "state": state,
+        "zipcode": zipCode,
+        "country": country,
+        "dob": DOB,
+        "profession": profession,
+        "company_name": firm
       };
       var request = http.MultipartRequest('POST', User_setting_Uri);
       request.fields.addAll(body);
-      if(image!=null){
-        request.files.add(await http.MultipartFile.fromPath("image", image.path));
+      if (image != null) {
+        request.files
+            .add(await http.MultipartFile.fromPath("image", image.path));
       }
-
+      var pref = await getPref();
+      String token = "";
+      if (pref.getString(keyToken) != null) token = pref.getString(keyToken);
       //debugPrint(image.path.toString());
-      // request.headers.addAll({
-      //   "Authorization": "Bearer $token",
-      // });
+      request.headers.addAll({
+        "Authorization": "Bearer $token",
+      });
       http.StreamedResponse response = await request.send();
       final a = await http.Response.fromStream(response);
       debugPrint("User Settings Post Api Response ====${a.body}");
-      if(a.statusCode==200){
+      if (a.statusCode == 200) {
         return jsonDecode(a.body);
-      }
-      else{
+      } else {
         return customFlutterToast(jsonDecode(a.body)["message"].toString());
       }
     } catch (e) {
       print(e);
     }
   }
+
+  /// ===============================================get Apis=================================================================
+  Future getDetailsOfCurrentUser() async {
+    try {
+      if (await isConnectedToInternet()) {
+        Uri getDetailsOfCurrentUser_Url =
+        Uri.parse(ApiEndpoints.dashboardData);
+        var getDetailsOfCurrentUser_Response = await client.get(
+            getDetailsOfCurrentUser_Url,
+            headers: await headerWithContentType());
+        MYAPILOGS("getDetailsOfCurrentUser api", getDetailsOfCurrentUser_Response);
+        if (getDetailsOfCurrentUser_Response.statusCode == 200) {
+          print("===dash detail====${getDetailsOfCurrentUser_Response.body}");
+          return dashboardPageModelFromJson(
+              getDetailsOfCurrentUser_Response.body);
+        } else {
+          Results.error("no internet connection");
+        }
+      } else {
+        customFlutterToast("Check your internet...");
+      }
+    } catch (_) {}
+  }
+
+  Future getSettingsData() async {
+    try {
+      if (await isConnectedToInternet()) {
+        Uri getSettingsData = Uri.parse(ApiEndpoints.SettingGetApi);
+
+        var getSettingsDataResponse = await client.get(getSettingsData,headers: await headerWithContentType());
+        MYAPILOGS("get Settings data", getSettingsDataResponse);
+        if (getSettingsDataResponse.statusCode == 200) {
+          return getSettingsDataModelFromJson(getSettingsDataResponse.body);
+        } else {
+          Results.error("no internet connection");
+        }
+      } else {
+        customFlutterToast("Check your internet...");
+      }
+    } catch (_) {}
+  }
+
 }
 
 MYAPILOGS(api, response) {

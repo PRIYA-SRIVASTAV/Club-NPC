@@ -72,11 +72,7 @@ class Setting_Controller {
 
   /// setting get api
   setting_profile_get_data_Method() async {
-    var ID;
-    await getPref().then((value) {
-      ID = value.getString(KEYID);
-    });
-    var a = await ApiCalling().getSettingsData(ID);
+    var a = await ApiCalling().getSettingsData();
     return a;
   }
 }

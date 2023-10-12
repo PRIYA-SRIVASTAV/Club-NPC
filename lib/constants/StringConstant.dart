@@ -4,7 +4,8 @@ String registerToNpc = "REGISTER TO NPC PORTAL";
 String skip = "Skip";
 String dashboard = "Dashboard";
 String workOrders = "Work Orders";
-
+String OTP_type1= "create_acc";
+String OTP_type2= "forget_pass";
 //On boarding page content
 //on Boarding first page.
 String title1 = "Is machine breakdown situation \n    keeping you awake at night?";

@@ -5,18 +5,19 @@ import 'package:flutter/material.dart';
 import '../../core/ApiCall.dart';
 
 class Forget_Password_Controller {
-  forget_password_Method(email,context) async {
-    if (email.toString().isEmpty) {
-      customFlutterToast("email can't be empty");
+  forget_password_Method(mobile,context) async {
+    if (mobile.toString().isEmpty) {
+      customFlutterToast("mobile can't be empty");
     } else {
-      var r = await ApiCalling().forget_Password(email);
+      var r = await ApiCalling().forget_Password(mobile);
       if (r["status"].toString() == "true") {
+        customFlutterToast(r["message"].toString());
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Otp_page(emailID: email,fromPage: "forgetPage",))
+          MaterialPageRoute(builder: (context) => Otp_page(mobile: mobile,fromPage: "forgetPage",))
         );
       } else {
-        customFlutterToast(r["message"]);
+        customFlutterToast(r["message"].toString());
       }
     }
   }

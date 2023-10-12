@@ -189,6 +189,7 @@ class _Register_PageState extends State<Register_Page> {
                 TextFormField(
                   controller: enterMobile,
                   maxLength: 10,
+                  keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                     counterText: "",
                     prefixText: "+91",

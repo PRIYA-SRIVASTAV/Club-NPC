@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'constants/colorConstant.dart';
-import 'controller/forget_password_controller.dart';
 
 class Otp_page extends StatefulWidget {
-  var emailID;
+  var mobile;
   var fromPage;
 
-  Otp_page({required this.fromPage, required this.emailID, super.key});
+  Otp_page({required this.fromPage, required this.mobile, super.key});
 
   @override
   State<Otp_page> createState() => _Otp_pageState();
@@ -68,7 +67,7 @@ class _Otp_pageState extends State<Otp_page> {
                 SizedBox(
                   height: 1.h,
                 ),
-                const Text("We have send the OTP to your Email."),
+                const Text("We have send the OTP to your Whatsapp number."),
                 SizedBox(
                   height: 3.h,
                 ),
@@ -121,14 +120,21 @@ class _Otp_pageState extends State<Otp_page> {
                           _otpController[4].text.toString() +
                           _otpController[5].text.toString();
 
-                      RegisterOtpController()
-                          .registerOtpMethod(
-                              widget.emailID, otp, context, widget.fromPage)
-                          .whenComplete(() => setState(
-                                () {
-                                  CalledApi = false;
-                                },
-                              ));
+                     widget.fromPage=="RegisterPage"?  RegisterOtpController()
+                         .registerOtpMethod1(
+                         widget.mobile, otp, context, widget.fromPage)
+                         .whenComplete(() => setState(
+                           () {
+                         CalledApi = false;
+                       },
+                     )) : RegisterOtpController()
+                         .registerOtpMethod2(
+                         widget.mobile, otp, context, widget.fromPage)
+                         .whenComplete(() => setState(
+                           () {
+                         CalledApi = false;
+                       },
+                     ));
                     },
                     backgroundColor: appThemeColor,
                     shape: OutlineInputBorder(

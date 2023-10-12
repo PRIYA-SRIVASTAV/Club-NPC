@@ -14,12 +14,19 @@ class Sign_in_Page extends StatefulWidget {
 }
 
 class _Sign_in_PageState extends State<Sign_in_Page> {
-  TextEditingController EmailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
+  bool _obscureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   @override
   void dispose() {
-    EmailController.dispose();
+    phoneController.dispose();
     PasswordController.dispose();
     super.dispose();
   }
@@ -74,15 +81,15 @@ class _Sign_in_PageState extends State<Sign_in_Page> {
                   height: 5.h,
                 ),
                 Text(
-                  "Email",
+                  "Phone number",
                   style:
                       TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600),
                 ),
                 SizedBox(
                   height: 0.5.h,
                 ),
-                textFieldContainer(EmailController, context, "Enter Your Email",
-                    Icons.mail_outline),
+                textFieldContainer(phoneController, context,
+                    "Enter Your Phone no.", Icons.call, TextInputType.phone),
                 SizedBox(
                   height: 1.h,
                 ),
@@ -94,8 +101,29 @@ class _Sign_in_PageState extends State<Sign_in_Page> {
                 SizedBox(
                   height: 1.h,
                 ),
-                textFieldContainer(PasswordController, context,
-                    "Enter Your Password", Icons.remove_red_eye),
+                TextField(
+                  controller: PasswordController,
+                  obscureText: _obscureText,
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: Icon(_obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility),
+                      color: appThemeColor,
+                      onPressed: _togglePasswordVisibility,
+                    ),
+                    hintText: "Enter your Password",
+                    hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: appThemeColor, width: 0.5.w),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 0.5.h,
                 ),
@@ -123,7 +151,7 @@ class _Sign_in_PageState extends State<Sign_in_Page> {
                   width: 80.w,
                   child: FloatingActionButton(
                     onPressed: () {
-                      SignIn_Controller().signIn_Method(EmailController.text,
+                      SignIn_Controller().signIn_Method(phoneController.text,
                           PasswordController.text, context);
                     },
                     backgroundColor: appThemeColor,
