@@ -507,7 +507,8 @@ class _Settings_PageState extends State<Settings_Page> {
                 body: Center(
                   child: CircularProgressIndicator(),
                 ),
-              ));
+              ),
+    );
   }
 
   void get_Setting_data() async {

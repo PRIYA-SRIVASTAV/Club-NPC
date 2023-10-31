@@ -36,12 +36,12 @@ class Data {
   int id;
   String joinid;
   int role;
-  dynamic image;
-  dynamic nameinput;
+  String image;
+  String nameinput;
   String name;
-  dynamic companyName;
+  String companyName;
   String accountEmail;
-  dynamic pwd;
+  String pwd;
   String accountMobile;
   String accountAddress;
   String otherAddress;
@@ -50,23 +50,24 @@ class Data {
   String accountZipcode;
   String countryName;
   DateTime dob;
-  dynamic clubName;
-  dynamic clubOption;
+  String clubName;
+  String clubOption;
   String clubProfession;
-  dynamic clubConcept;
+  String clubConcept;
   String clubTerms;
   String link;
-  dynamic refNo;
+  String refNo;
   DateTime createdAt;
-  dynamic clubtype;
-  dynamic status;
-  dynamic location;
+  String clubtype;
+  String status;
+  String location;
   String firmName;
-  int userstatus;
+  String userstatus;
   int otp;
   DateTime updatedAt;
   String whoIntroduce;
-  dynamic forgetOtp;
+  String forgetOtp;
+  int isEnable;
 
   Data({
     required this.id,
@@ -103,6 +104,7 @@ class Data {
     required this.updatedAt,
     required this.whoIntroduce,
     required this.forgetOtp,
+    required this.isEnable,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -140,6 +142,7 @@ class Data {
     updatedAt: DateTime.parse(json["updated_at"]),
     whoIntroduce: json["who_introduce"],
     forgetOtp: json["forget_otp"],
+    isEnable: json["is_enable"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -177,5 +180,6 @@ class Data {
     "updated_at": updatedAt.toIso8601String(),
     "who_introduce": whoIntroduce,
     "forget_otp": forgetOtp,
+    "is_enable": isEnable,
   };
 }

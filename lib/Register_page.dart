@@ -1,5 +1,4 @@
 import 'package:club_npc_registration/constants/colorConstant.dart';
-import 'package:club_npc_registration/utils/helper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'constants/StringConstant.dart';
@@ -13,6 +12,7 @@ class Register_Page extends StatefulWidget {
 }
 
 class _Register_PageState extends State<Register_Page> {
+
   TextEditingController enterPassword = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   TextEditingController enterName = TextEditingController();
@@ -21,6 +21,7 @@ class _Register_PageState extends State<Register_Page> {
   TextEditingController whoIntroduced = TextEditingController();
 
   bool ApiCalled = false;
+
   @override
   void dispose() {
     enterName.dispose();
@@ -31,6 +32,7 @@ class _Register_PageState extends State<Register_Page> {
     enterPassword.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -253,11 +255,13 @@ class _Register_PageState extends State<Register_Page> {
                               confirmPassword.text,
                               enterPassword.text,
                               context)
-                          .whenComplete(() => setState(
-                                () {
-                                  ApiCalled = false;
-                                },
-                              ));
+                          .whenComplete(
+                            () => setState(
+                              () {
+                                ApiCalled = false;
+                              },
+                            ),
+                          );
                     },
                     backgroundColor: appThemeColor,
                     shape: OutlineInputBorder(

@@ -8,7 +8,8 @@ TextEditingController enter_otp = TextEditingController();
 Widget textFieldContainer(controller, context, text, icons,keyboardType) {
   return TextFormField(
     onChanged: (value) {},keyboardType: keyboardType,
-    onTap: () {},maxLength: 10,
+    onTap: () {},
+    maxLength: 10,
     controller: controller,
     cursorColor: appThemeColor,
     decoration: InputDecoration(counterText: "",

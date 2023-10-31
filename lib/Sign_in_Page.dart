@@ -104,6 +104,7 @@ class _Sign_in_PageState extends State<Sign_in_Page> {
                 TextField(
                   controller: PasswordController,
                   obscureText: _obscureText,
+                  cursorColor: appThemeColor,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       icon: Icon(_obscureText

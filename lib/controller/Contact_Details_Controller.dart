@@ -57,11 +57,14 @@ class Contact_Details_Controller {
     else if (dob.toString().isEmpty){
       customFlutterToast("dob can't be empty");
     }
-    else if (terms.toString().isEmpty){
-      customFlutterToast("terms please select");
+    else if (terms==null){
+      customFlutterToast("Please select terms");
     }
     else if (another_address.toString().isEmpty){
       customFlutterToast("another_address  can't be empty");
+    }
+    else if (are_you_a==null){
+      customFlutterToast("Please select You are ?");
     }
     else {
       var r = await ApiCalling().Contact_Details( address,
