@@ -22,8 +22,6 @@ class MyApp extends StatelessWidget {
                 toolbarHeight:70,
               ),
               primaryColor: appThemeColor),
-
-
           home: const splash_screen(),
         );
       },
